@@ -1,16 +1,8 @@
-# Deployment of ML models using FastAPI and Docker
+# Deploying ML models using FastAPI and Docker
 
 
-
-## About this Repo
-This repository contains miscellaneous machine learning scripts and notebooks for data analysis, modeling, and visualization. 
-
-
-
-
-
-# Dataset
-## Breast Cancer Wisconsin (Diagnostic) Data Set
+## Dataset
+### Breast Cancer Wisconsin (Diagnostic) Data Set
 
 For this workshop we are going to work with the following dataset:
 
@@ -49,7 +41,7 @@ cd fastapi_ml_docker
 2. Create (and activate) a new environment, named `fastapi_ml` with Python 3.7. If prompted to proceed with the install `(Proceed [y]/n)` type y.
 
 	```shell
-	conda create -n fastapi_ml python=3.10
+	conda create -n fastapi_ml python=3.7
 	source activate fastapi_ml
 	```
 	
@@ -63,26 +55,44 @@ pip install -r requirements.txt
 
 # Train
 
-After we installing all the dependencies we can now run the script in code/train.py, this script takes the input data and outputs a trained model and a pipeline for our web service.
+After installing all the dependencies we can now run the script in code/train.py, this script takes the input data and outputs a trained model and a pipeline for our web service.
 
 `$ python code/train.py`
 
-# Web application
+## Web application
 
-Finally we can test our web application by running:
+Finally, we can test our web application by running:
 
 `$ uvicorn main:app`
 
-# Docker
+## Docker
 
 Now that we have our web application running, we can use the Dockerfile to create an image for running our web application inside a container
 
-`$ docker build . -t sklearn_fastapi_docker`
+`$ docker build . -t ml_fastapi_docker`
 
 And now we can test our application using Docker
 
-`$ docker run -p 8000:8000 sklearn_fastapi_docker`
+`$ docker run -p 8000:8000 ml_fastapi_docker`
 
-# Test!
+## Test!
 
-Test by using the calls in tests/example_calls.txt from the terminal
+Run the following commands in terminal or run the `tests/client.py` script:
+
+```bash
+# GET method info
+curl -XGET http://localhost:8000/info
+
+# GET method health
+curl -XGET http://localhost:8000/health
+
+# POST method predict
+curl -H "Content-Type: application/json" -d '{
+  "concavity_mean": 0.3001,
+  "concave_points_mean": 0.1471,
+  "perimeter_se": 8.589,
+  "area_se": 153.4,
+  "texture_worst": 17.33,
+  "area_worst": 2019.0
+}' -XPOST http://0.0.0.0:8000/predict
+```
