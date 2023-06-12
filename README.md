@@ -2,9 +2,8 @@
 
 
 ## Dataset
-### Breast Cancer Wisconsin (Diagnostic) Data Set
 
-For this workshop we are going to work with the following dataset:
+For this repo, we are going to work with the following dataset:
 
 https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic)
 
@@ -15,10 +14,9 @@ n the 3-dimensional space is that described in: [K. P. Bennett and O. L. Mangasa
 
 1) ID number
 2) Diagnosis (M = malignant, B = benign)
-3-32)
 
 Ten real-valued features are computed for each cell nucleus:
-
+```
 a) radius (mean of distances from center to points on the perimeter)
 b) texture (standard deviation of gray-scale values)
 c) perimeter
@@ -29,7 +27,7 @@ g) concavity (severity of concave portions of the contour)
 h) concave points (number of concave portions of the contour)
 i) symmetry
 j) fractal dimension ("coastline approximation" - 1)
-
+```
 ## Preparing the environment
 
 1. Clone the repository, and navigate to the downloaded folder.
@@ -48,7 +46,7 @@ cd fastapi_ml_docker
 	At this point your command line should look something like: `(fastapi_ml) <User>:fastapi_ml_docker <user>$`. The `(fastapi_ml)` indicates that your environment has been activated, and you can proceed with further package installations.
 
 3. Before you can experiment with the code, you'll have to make sure that you have all the libraries and dependencies required to support this project. You can install dependencies using:
-```
+```bash
 pip install -r requirements.txt
 ```
 
@@ -57,23 +55,31 @@ pip install -r requirements.txt
 
 After installing all the dependencies we can now run the script in code/train.py, this script takes the input data and outputs a trained model and a pipeline for our web service.
 
-`$ python code/train.py`
+```bash
+python code/train.py
+```
 
 ## Web application
 
 Finally, we can test our web application by running:
 
-`$ uvicorn main:app`
+```bash
+uvicorn main:app
+```
 
 ## Docker
 
 Now that we have our web application running, we can use the Dockerfile to create an image for running our web application inside a container
 
-`$ docker build . -t ml_fastapi_docker`
+```bash
+docker build . -t ml_fastapi_docker
+```
 
 And now we can test our application using Docker
 
-`$ docker run -p 8000:8000 ml_fastapi_docker`
+```bash
+docker run -p 8000:8000 ml_fastapi_docker
+```
 
 ## Test!
 
