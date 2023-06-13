@@ -335,7 +335,12 @@ NAME             READY   UP-TO-DATE   AVAILABLE   AGE
 metrics-server   1/1     1            1           76s
 ```
 
-With that, we can now create our autoscaler by applying `yaml/autoscale.yaml`. Please wait for about a minute, so it can query the metrics server. Running `kubectl get hpa` should show: 
+With that, we can now create our autoscaler by applying `yaml/autoscale.yaml`:
+```bash
+kubectl apply -f yaml/autoscale.yaml
+```
+
+Please wait for about a minute, so it can query the metrics server. Running `kubectl get hpa` should show: 
 
 ```
 NAME             REFERENCE                          TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
@@ -347,7 +352,6 @@ If it's showing `Unknown` instead of `0%` in the `TARGETS` column, you can try s
 
 
 ### Stress Test
-
 
 To test the autoscaling capability of our deployment, I provided a short bash script (`request.sh`) that will just persistently send requests to our application. Please open a new terminal window, make sure that you're in the root directory of this README file, then run this command (for Linux and Mac):
 
