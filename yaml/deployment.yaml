@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ml-serving-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ml-serving
+  template:
+    metadata:
+      labels:
+        app: ml-serving
+    spec:
+      containers:
+      - name: ml-serving
+#        image: localhost:5000/ml_fastapi_docker:latest
+        image: ml_fastapi_docker
+        imagePullPolicy: Never
+        envFrom:
+        - configMapRef:
+            name: mlserving-configs
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+          - name: ml-serving-volume
+            mountPath: /app/model
+#        resources:
+#          requests:
+#            memory: 32Mi
+#            cpu: 400m
+#          limits:
+#            memory: 64Mi
+#            cpu: 10m
+
+      volumes:
+        - name: ml-serving-volume
+          hostPath:
+            path: /var/tmp/model
+            type: Directory
